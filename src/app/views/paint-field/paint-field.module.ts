@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-
+import { PaintDirective } from './paint.directive';
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    PaintDirective
+  ],
   imports: [
     CommonModule
   ]
