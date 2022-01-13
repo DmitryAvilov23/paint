@@ -1,1 +1,4 @@
-<p>range-input works!</p>
+<label class="range right-20">
+    Line width: 
+    <input class="range__input left-10" [(ngModel)]="lineWidth" (ngModelChange)="changeLineWidth()" type="range" min="1" max="5" step="1">
+</label>
