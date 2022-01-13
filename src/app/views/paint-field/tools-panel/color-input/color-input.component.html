@@ -1,4 +1,4 @@
-<label class="color">
-    Color: 
-    <input class="color__input left-10" [(ngModel)]="color" (ngModelChange)="changeLineColor()" type="color">
+<label class="color right-20">
+    {{ isBgInput ? "Background color" : "Color" }}
+    <input class="color__input left-10" [(ngModel)]="color" (ngModelChange)="changeColor()" type="color">
 </label>

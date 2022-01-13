@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, ViewChild } from '@angular/core';
 import { fromEvent, map, Observable, pairwise, Subject, switchMap, takeUntil } from 'rxjs';
+import { ICanvasSize } from '../interfaces';
 
 import { PaintService } from '../paint.service';
 
@@ -40,13 +41,16 @@ export class CanvasComponent implements AfterViewInit, OnDestroy {
     this._scale = this._nativeWindow.devicePixelRatio;
     this._context = this._canvas.getContext('2d')!;
 
+    
     this.initEvents();
     this.initCanvas();
-
+    
     this.createMouseDownSubscribtion();
     this.createClearFieldSubscribtion();
+    this.createBgColorSubscribtion();
     this.createLineWidthSubscribtion();
     this.createLineColorSubscribtion();
+    this.createCanvasSizeSubscribtion();
   }
 
   ngOnDestroy(): void {
@@ -85,6 +89,36 @@ export class CanvasComponent implements AfterViewInit, OnDestroy {
   private createClearFieldSubscribtion(): void {
     this._paintService.onClear.pipe(takeUntil(this._ngUnsubscribe)).subscribe(() => {
       this._context.clearRect(0, 0, this._canvas.width, this._canvas.height);
+    });
+  }
+
+  private createBgColorSubscribtion(): void {
+    this._paintService.onBackgroundColorChange.pipe(takeUntil(this._ngUnsubscribe)).subscribe((color: string) => {
+      this._canvas.style.backgroundColor = color;
+    });
+  }
+
+  private createCanvasSizeSubscribtion(): void {
+    this._paintService.onCanvasSizeChange.pipe(takeUntil(this._ngUnsubscribe)).subscribe((size: ICanvasSize) => {
+      const maxCanvasWidth: number = this._nativeWindow.innerWidth - 40;
+      const maxCanvasHeight: number = 2000;
+      const defaultCanvasSize = 100;
+
+      if (size.width > maxCanvasWidth) {
+        this._canvas.width = maxCanvasWidth * this._scale;
+      } else if (size.width < defaultCanvasSize) {
+        this._canvas.width = defaultCanvasSize * this._scale;
+      } else {
+        this._canvas.width = size.width * this._scale;
+      };
+      
+      if (size.height < defaultCanvasSize) {
+        this._canvas.height = defaultCanvasSize * this._scale;
+      } else if (size.height > maxCanvasHeight) {
+        this._canvas.height = maxCanvasHeight * this._scale;
+      } else {
+        this._canvas.height = size.height * this._scale;
+      };
     });
   }
 

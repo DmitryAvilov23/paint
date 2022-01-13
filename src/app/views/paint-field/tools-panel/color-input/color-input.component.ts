@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { PaintService } from '../../paint.service';
 
@@ -7,16 +7,21 @@ import { PaintService } from '../../paint.service';
   templateUrl: './color-input.component.html',
   styleUrls: ['./color-input.component.scss']
 })
-export class ColorInputComponent implements OnInit {
+export class ColorInputComponent {
+
+  @Input() isBgInput = false;
 
   public color: string = "#000";
 
   constructor(private _paintService: PaintService) { }
 
-  ngOnInit(): void {
-  }
+  changeColor() {
+    if (this.isBgInput) {
+      this._paintService.onBackgroundColorChange.emit(this.color);
 
-  changeLineColor() {
+      return;
+    }
+    
     this._paintService.onColorChange.emit(this.color);
   }
 }

@@ -8,6 +8,7 @@ import { CanvasComponent } from './canvas/canvas.component';
 import { RangeInputComponent } from './tools-panel/range-input/range-input.component';
 import { ClearButtonComponent } from './tools-panel/clear-button/clear-button.component';
 import { ColorInputComponent } from './tools-panel/color-input/color-input.component';
+import { CanvasSizeComponent } from './tools-panel/canvas-size/canvas-size.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { ColorInputComponent } from './tools-panel/color-input/color-input.compo
     CanvasComponent,
     RangeInputComponent,
     ColorInputComponent,
-    ClearButtonComponent
+    ClearButtonComponent,
+    CanvasSizeComponent
   ],
   imports: [
     CommonModule,
