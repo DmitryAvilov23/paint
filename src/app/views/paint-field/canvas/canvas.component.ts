@@ -42,8 +42,11 @@ export class CanvasComponent implements AfterViewInit, OnDestroy {
 
     this.initEvents();
     this.initCanvas();
+
     this.createMouseDownSubscribtion();
     this.createClearFieldSubscribtion();
+    this.createLineWidthSubscribtion();
+    this.createLineColorSubscribtion();
   }
 
   ngOnDestroy(): void {
@@ -59,7 +62,7 @@ export class CanvasComponent implements AfterViewInit, OnDestroy {
   }
 
   private initCanvas(): void {
-    const rect = this._canvas.getBoundingClientRect();
+    const rect: DOMRect = this._canvas.getBoundingClientRect();
 
     this._canvas.width = rect.width * this._scale;
     this._canvas.height = rect.height * this._scale;
@@ -83,6 +86,18 @@ export class CanvasComponent implements AfterViewInit, OnDestroy {
     this._paintService.onClear.pipe(takeUntil(this._ngUnsubscribe)).subscribe(() => {
       this._context.clearRect(0, 0, this._canvas.width, this._canvas.height);
     });
+  }
+
+  private createLineWidthSubscribtion(): void {
+    this._paintService.onLineWidthChange.pipe(takeUntil(this._ngUnsubscribe)).subscribe((width: number) => {
+      this._context.lineWidth = width;
+    })
+  }
+
+  private createLineColorSubscribtion(): void {
+    this._paintService.onColorChange.pipe(takeUntil(this._ngUnsubscribe)).subscribe((color: string) => {
+      this._context.strokeStyle = color;
+    })
   }
 
   private getMouseMoveSubscribtion(): Observable<any> {
