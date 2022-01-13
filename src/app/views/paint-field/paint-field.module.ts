@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { PaintDirective } from './paint.directive';
 import { PaintFieldComponent } from './paint-field.component';
 import { ToolsPanelComponent } from './tools-panel/tools-panel.component';
+import { CanvasComponent } from './canvas/canvas.component';
 
 @NgModule({
   declarations: [
     PaintFieldComponent,
     ToolsPanelComponent,
-    PaintDirective
+    CanvasComponent
   ],
   imports: [
     CommonModule
