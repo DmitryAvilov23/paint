@@ -7,7 +7,7 @@ const routes: Routes = [
   { 
     path: '',
     pathMatch: 'full',
-    loadChildren: () => import('./views/paint-field/paint-field.module').then(m => m.PaintFieldModule),
+    loadChildren: () => import('./views/paint-field/paint.module').then(m => m.PaintModule),
     component: PaintFieldComponent
   }
 ];

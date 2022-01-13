@@ -1,6 +1,8 @@
 import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, ViewChild } from '@angular/core';
 import { fromEvent, map, Observable, pairwise, Subject, switchMap, takeUntil } from 'rxjs';
 
+import { PaintService } from '../paint.service';
+
 function getNativeWindow(): Window {
   return window;
 }
@@ -31,7 +33,7 @@ export class CanvasComponent implements AfterViewInit, OnDestroy {
 
   private _ngUnsubscribe: Subject<void> = new Subject<void>();
 
-  constructor() { }
+  constructor(private _paintService: PaintService) { }
 
   ngAfterViewInit(): void {
     this._canvas = this.canvas.nativeElement;
@@ -41,6 +43,7 @@ export class CanvasComponent implements AfterViewInit, OnDestroy {
     this.initEvents();
     this.initCanvas();
     this.createMouseDownSubscribtion();
+    this.createClearFieldSubscribtion();
   }
 
   ngOnDestroy(): void {
@@ -73,6 +76,12 @@ export class CanvasComponent implements AfterViewInit, OnDestroy {
       this._context.moveTo(from.x, from.y);
       this._context.lineTo(to.x, to.y);
       this._context.stroke();
+    });
+  }
+
+  private createClearFieldSubscribtion(): void {
+    this._paintService.onClear.pipe(takeUntil(this._ngUnsubscribe)).subscribe(() => {
+      this._context.clearRect(0, 0, this._canvas.width, this._canvas.height);
     });
   }
 

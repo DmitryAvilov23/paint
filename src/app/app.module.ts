@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { PaintFieldModule } from './views/paint-field/paint-field.module';
+import { PaintModule } from './views/paint-field/paint.module';
 
 @NgModule({
   declarations: [
@@ -12,7 +12,7 @@ import { PaintFieldModule } from './views/paint-field/paint-field.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    PaintFieldModule
+    PaintModule
   ],
   providers: [],
   bootstrap: [AppComponent]
